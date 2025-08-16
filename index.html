@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encouragement Date</title>
+<style>
+    body {
+        font-family: 'Cormorant Garamond', serif;
+        background: linear-gradient(#fde2e4, #fad2e1);
+        text-align: center;
+        padding: 50px;
+        color: #11c8e0;
+        background-image: url('44149a5810c1f5147b66010d0577a583.jpg'); /* light blueprint pattern */
+        background-size: cover;
+        overflow: hidden;
+    }
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+    p {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+    }
+    button {
+        padding: 15px 25px;
+        font-size: 1.2rem;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .yes {
+        background-color: #ffb3c6;
+        color: white;
+    }
+    .yes:hover {
+        background-color: #ff8fab;
+        transform: scale(1.05);
+    }
+    .no {
+        background-color: #b0c4b1;
+        color: white;
+        position: absolute;
+    }
+    .hidden {
+        display: none;
+    }
+    #success {
+        font-size: 1.5rem;
+        color: #e75480;
+        margin-top: 30px;
+        display: none;
+    }
+    /* Sparkle animation */
+    @keyframes sparkle {
+        0% { opacity: 0; transform: scale(0.5); }
+        50% { opacity: 1; transform: scale(1.2); }
+        100% { opacity: 0; transform: scale(0.5); }
+    }
+    .sparkle {
+        position: absolute;
+        font-size: 20px;
+        animation: sparkle 1s ease-out forwards;
+        pointer-events: none;
+    }
+</style>
+</head>
+<body>
+
+<h1>HELLO YOMI!</h1>
+<h2>Can you be my date in KAPE-llowship tomorrow?</h1>
+<p>Pretty PLEASE!</p>
+
+<button class="yes" onclick="sayYes()">Yes 💖</button>
+<button class="no" id="noBtn" onmouseover="moveNo()">No 🙈</button>
+
+<div id="success">Yay! THANK YOUUUUUUU. See you tomorrow! 🏛️☕</div>
+
+<script>
+    const noBtn = document.getElementById("noBtn");
+    let dodgeCount = 0;
+
+    function moveNo() {
+        dodgeCount++;
+        if (dodgeCount < 5) {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        } else {
+            noBtn.textContent = "Yes 💖";
+            noBtn.classList.remove("no");
+            noBtn.classList.add("yes");
+            noBtn.onclick = sayYes;
+            noBtn.onmouseover = null; // stop dodging
+            noBtn.style.position = "static";
+            noBtn.style.marginTop = "20px";
+            sparkleEffect(noBtn);
+        }
+    }
+
+    function sayYes() {
+        document.getElementById("success").style.display = "block";
+        noBtn.classList.add("hidden");
+    }
+
+    function sparkleEffect(element) {
+        for (let i = 0; i < 10; i++) {
+            const sparkle = document.createElement("div");
+            sparkle.textContent = "✨";
+            sparkle.classList.add("sparkle");
+            sparkle.style.left = (element.offsetLeft + Math.random() * 80) + "px";
+            sparkle.style.top = (element.offsetTop + Math.random() * 40) + "px";
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+    }
+
+    // Initial position for "No" button
+    moveNo();
+</script>
+
+</body>
+</html>
